@@ -133,8 +133,20 @@ function showAnswer() {
   MathJax.typesetPromise();
 }// ===== 次へ =====
 function nextQuestion() {
-  index++;
-  if (index >= questions.length) index = 0; // ループ
+
+  let next;
+
+  do {
+    next = Math.floor(
+      Math.random() * questions.length
+    );
+  } while (
+    questions.length > 1 &&
+    next === index
+  );
+
+  index = next;
+
   render();
 }
 
