@@ -21,7 +21,16 @@ body {
   max-width: 800px;
   margin: auto;
 }
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
+.header img {
+  width: 60px;
+  height: 60px;
+}
 .box {
   border: 1px solid #ccc;
   padding: 15px;
@@ -65,7 +74,10 @@ button {
 </head>
 <body>
 
-<h2>なつ強化問題</h2>
+<div class="header">
+  <h2>なつ強化問題</h2>
+  <img src="icon.jpg" alt="アイコン">
+</div>
 
 <div class="box">
   <div id="questionInfo"></div>
