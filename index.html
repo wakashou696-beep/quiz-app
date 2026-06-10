@@ -35,25 +35,22 @@ window.MathJax = {
 
 <script>
 // ===== JSONデータ =====
-const questions = [
-  {
-    id: "000001",
-    question: { text: "因数分解しなさい", latex: "x^2+5x+6" },
-    answer: { latex: "(x+2)(x+3)" }
-  },
-  {
-    id: "000002",
-    question: { text: "次を簡単にしなさい", latex: "\\sqrt{75}" },
-    answer: { latex: "5\\sqrt{3}" }
-  },
-  {
-    id: "000003",
-    question: { text: "三角形の面積を求めなさい", figure: { base: 8, height: 5 } },
-    answer: { latex: "20" }
-  }
-];
-
+let questions = [];
 let index = 0;
+
+async function loadQuestions() {
+  const response = await fetch("./data/questions.json");
+
+  questions = await response.json();
+
+  // enabled=falseを除外
+  questions = questions.filter(q => q.enabled);
+
+  render();
+}
+
+loadQuestions();
+
 
 // ===== 表示関数 =====
 function render() {
@@ -92,7 +89,7 @@ function nextQuestion() {
 }
 
 // 初期表示
-render();
+loadQuestions();
 </script>
 
 </body>

@@ -1,0 +1,90 @@
+[
+  {
+    "id": "000001",
+    "enabled": true,
+    "category": "math",
+    "schoolLevel": "junior",
+    "grade": 3,
+    "unit": "factorization",
+    "difficulty": 2,
+    "tags": [
+      "計算",
+      "基本",
+      "定期テスト"
+    ],
+    "question": {
+      "type": "expression",
+      "text": "因数分解しなさい",
+      "latex": "x^2+5x+6",
+      "figure": null
+    },
+    "answer": {
+      "type": "expression",
+      "latex": "(x+2)(x+3)"
+    },
+    "metadata": {
+      "verified": true,
+      "source": "manual",
+      "created": "2026-06-10"
+    }
+  },
+  {
+    "id": "000002",
+    "enabled": true,
+    "category": "math",
+    "schoolLevel": "junior",
+    "grade": 3,
+    "unit": "square_root",
+    "difficulty": 2,
+    "tags": [
+      "計算"
+    ],
+    "question": {
+      "type": "expression",
+      "text": "次を簡単にしなさい",
+      "latex": "\\sqrt{75}",
+      "figure": null
+    },
+    "answer": {
+      "type": "expression",
+      "latex": "5\\sqrt{3}"
+    },
+    "metadata": {
+      "verified": true,
+      "source": "manual",
+      "created": "2026-06-10"
+    }
+  },
+  {
+    "id": "000003",
+    "enabled": true,
+    "category": "math",
+    "schoolLevel": "junior",
+    "grade": 3,
+    "unit": "geometry",
+    "difficulty": 2,
+    "tags": [
+      "三角形",
+      "面積"
+    ],
+    "question": {
+      "type": "geometry",
+      "text": "三角形の面積を求めなさい",
+      "latex": null,
+      "figure": {
+        "shape": "triangle",
+        "base": 8,
+        "height": 5
+      }
+    },
+    "answer": {
+      "type": "number",
+      "latex": "20"
+    },
+    "metadata": {
+      "verified": true,
+      "source": "manual",
+      "created": "2026-06-10"
+    }
+  }
+]
