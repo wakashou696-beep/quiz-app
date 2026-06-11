@@ -139,8 +139,10 @@ function showAnswer() {
   const box = document.getElementById("answerBox");
 
   box.style.display = "block";
-  box.innerHTML = `解答: \\(${q.answer.latex}\\)<br>${q.answer.text}`;
-  
+  box.innerHTML = `
+  ${q.answer.latex ? `解答: \\(${q.answer.latex}\\)<br>` : ""}
+  ${q.answer.text ? `答え: ${q.answer.text}` : ""}
+　`;
   MathJax.typesetPromise();
 }// ===== 次へ =====
 function nextQuestion() {
