@@ -140,7 +140,7 @@ function showAnswer() {
 
   box.style.display = "block";
   box.innerHTML = "解答: \\(" + q.answer.latex + "\\)";
-  box.innerText = q.answer.text ? "解答: ${q.answer.text}" : "hoge";
+  box.innerText = "解答: ${q.answer.text}";
   MathJax.typesetPromise();
 }// ===== 次へ =====
 function nextQuestion() {
