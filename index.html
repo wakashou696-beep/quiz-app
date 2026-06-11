@@ -139,8 +139,8 @@ function showAnswer() {
   const box = document.getElementById("answerBox");
 
   box.style.display = "block";
-  box.innerHTML = "解答: \\(" + q.answer.latex + "\\)";
-  box.innerText = "解答: ${q.answer.text}";
+  box.innerHTML = `解答: \\(" + q.answer.latex + "\\)"<br>${q.answer.text}`;
+  
   MathJax.typesetPromise();
 }// ===== 次へ =====
 function nextQuestion() {
