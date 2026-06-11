@@ -129,8 +129,7 @@ function render() {
       : "";
 
   document.getElementById("answerBox").style.display = "none";
-  document.getElementById("answerBox").innerText = "";
-
+  document.getElementById("answerBox").innerText = q.answer.text ? "解答: ${q.answer.text}" : "";
   // DOM更新後に一括レンダリング
   MathJax.typesetPromise();
 }
@@ -140,8 +139,8 @@ function showAnswer() {
   const box = document.getElementById("answerBox");
 
   box.style.display = "block";
-  box.innerHTML = q.answer.latex ? "解答: \\(" + q.answer.latex + "\\)" : "";
-  box.innerText = q.answer.text ? "解答: ${q.answer.text}" : "";
+  box.innerHTML = "解答: \\(" + q.answer.latex + "\\)";
+  
   MathJax.typesetPromise();
 }// ===== 次へ =====
 function nextQuestion() {
