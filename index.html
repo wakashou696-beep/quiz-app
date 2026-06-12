@@ -125,7 +125,7 @@ function addSolved(id){
   }
 }
 // ===== 解答履歴でフィルター =====
-  function getAvailavleQuestions(){
+  function getAvailableQuestions(){
     const solved=getSolved();
     return questions.filter(q => !solved.includes(q,id));
   }
