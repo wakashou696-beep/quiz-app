@@ -118,7 +118,7 @@ loadQuestions();
 
 // ===== 解答履歴保存 =====
 function addSolved(id){
-  let solved=JSON.parse(localstorage.getItem("soleved")) || [];
+  let solved=JSON.parse(localStorage.getItem("soleved")) || [];
   if (!solved.includes(id)){
     solved.push(id);
     localStorage.setItem("solved",JSON.stringify(solved));
@@ -152,7 +152,7 @@ function render(q) {
   document.getElementById("answerBox").innerText = "";
   // DOM更新後に一括レンダリング
   requestAnimationFrame(() => {
-    MathJax.typesetPromise([box]);
+    MathJax.typesetPromise();
   });
 }
   
