@@ -94,8 +94,8 @@ button {
 
 <script>
 // ============================================= Script ==================================================
-// ===== LocalStregeデータ =====
-const solved = JSON.parse(lokacStorage.getItem("solved")) || [];
+// ===== localStorageデータ =====
+const solved = JSON.parse(localStorage.getItem("solved")) || [];
 // ===== JSONデータ =====
 let questions = [];
 let index = 0;
@@ -147,7 +147,7 @@ function showAnswer() {
   ${q.answer.text ? `答え: ${q.answer.text}` : ""}
 　`;
   solved.push(q.id);
-  localStrage.setItem("solved",JSON.stringify(solved));
+  localStorage.setItem("solved",JSON.stringify(solved));
   MathJax.typesetPromise();
 }
   
