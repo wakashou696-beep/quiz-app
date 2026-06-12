@@ -93,18 +93,19 @@ button {
 </div>
 
 <script>
+// ============================================= Script ==================================================
+// ===== LocalStregeデータ =====
+const solved = JSON.parse(lokacStorage.getItem("solved")) || [];
 // ===== JSONデータ =====
 let questions = [];
 let index = 0;
 
+// ===== loadQuestions =====
 async function loadQuestions() {
   const response = await fetch("./data/questions.json");
-
   questions = await response.json();
-
   // enabled=falseを除外
   questions = questions.filter(q => q.enabled);
-
   render();
 }
 
@@ -117,7 +118,8 @@ function render() {
   document.getElementById("questionInfo").innerText =
     `${index + 1} / ${questions.length}
      ID:${q.id}
-     難易度:${q.difficulty}`;
+     難易度:${q.difficulty}
+     解答済み:${solved.length}`;
   document.getElementById("questionText").innerText = q.question.text;
 
   document.getElementById("questionLatex").innerHTML =
@@ -133,6 +135,7 @@ function render() {
   // DOM更新後に一括レンダリング
   MathJax.typesetPromise();
 }
+  
 // ===== 解答表示 =====
 function showAnswer() {
   const q = questions[index];
@@ -143,8 +146,12 @@ function showAnswer() {
   ${q.answer.latex ? `解答: \\(${q.answer.latex}\\)<br>` : ""}
   ${q.answer.text ? `答え: ${q.answer.text}` : ""}
 　`;
+  solved.push(q.id);
+  localStrage.setItem("solved",JSON.stringify(solved));
   MathJax.typesetPromise();
-}// ===== 次へ =====
+}
+  
+// ===== 次へ =====
 function nextQuestion() {
 
   let next;
