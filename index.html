@@ -151,7 +151,9 @@ function render(q) {
   document.getElementById("answerBox").style.display = "none";
   document.getElementById("answerBox").innerText = "";
   // DOM更新後に一括レンダリング
-  MathJax.typesetPromise([box]);
+  requestAnimationFrame(() => {
+    MathJax.typesetPromise([box]);
+  });
 }
   
 // ===== 解答表示 =====
@@ -164,7 +166,9 @@ function showAnswer(q) {
   ${q.answer.text ? `答え: ${q.answer.text}` : ""}
 　`;
   addSolved(q.id);
-  MathJax.typesetPromise([box]);
+  requestAnimationFrame(() => {
+    MathJax.typesetPromise([box]);
+  });
 }
   
 // ===== 次へ =====
