@@ -118,7 +118,7 @@ loadQuestions();
 
 // ===== 解答履歴保存 =====
 function addSolved(id){
-  let solved=JSON.parse(localStorage.getItem("soleved")) || [];
+  let solved=JSON.parse(localStorage.getItem("solved")) || [];
   if (!solved.includes(id)){
     solved.push(id);
     localStorage.setItem("solved",JSON.stringify(solved));
