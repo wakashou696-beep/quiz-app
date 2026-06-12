@@ -120,7 +120,7 @@ loadQuestions();
 function addSolved(id){
   let solved=JSON.parse(localstorage.getItem("soleved")) || [];
   if (!solved.includes(id)){
-    solved.push(id));
+    solved.push(id);
     localStorage.setItem("solved",JSON.stringify(solved));
   }
 }
