@@ -86,7 +86,7 @@ button {
   <div id="questionFigure"></div>
   
   
-  <button onclick="showAnswer()">解答表示</button>
+  <button onclick="showAnswer(currentQuestion)">解答表示</button>
   <button onclick="nextQuestion()">次へ</button>
 
   <div id="answerBox" class="answer"></div>
@@ -99,6 +99,7 @@ const solved = JSON.parse(localStorage.getItem("solved")) || [];
 // ===== JSONデータ =====
 let questions = [];
 let index = 0;
+let currentQuestion;
 
 // ===== loadQuestions =====
 async function loadQuestions() {
@@ -106,15 +107,32 @@ async function loadQuestions() {
   questions = await response.json();
   // enabled=falseを除外
   questions = questions.filter(q => q.enabled);
-  render();
+  nextQuestion();
 }
 
 loadQuestions();
+// ===== 解答履歴読み込み =====
+  function getSolved(){
+    return JSON.parse(localStorage.getItem("solved")) || [];
+  }
 
+// ===== 解答履歴保存 =====
+function addSolved(id){
+  let solved=JSON.parse(localstorage.getItem("soleved")) || [];
+  if (!solved.includes(id)){
+    solved.push(id));
+    localStorage.setItem("solved",JSON.stringify(solved));
+  }
+}
+// ===== 解答履歴でフィルター =====
+  function getAvailavleQuestions(){
+    const solved=getSolved();
+    return questions.filter(q => !solved.includes(q,id));
+  }
 
 // ===== 表示関数 =====
-function render() {
-  const q = questions[index];
+function render(q) {
+  
   document.getElementById("questionInfo").innerText =
     `${index + 1} / ${questions.length}
      ID:${q.id}
@@ -137,8 +155,7 @@ function render() {
 }
   
 // ===== 解答表示 =====
-function showAnswer() {
-  const q = questions[index];
+function showAnswer(q) {
   const box = document.getElementById("answerBox");
 
   box.style.display = "block";
@@ -146,28 +163,20 @@ function showAnswer() {
   ${q.answer.latex ? `解答: \\(${q.answer.latex}\\)<br>` : ""}
   ${q.answer.text ? `答え: ${q.answer.text}` : ""}
 　`;
-  solved.push(q.id);
-  localStorage.setItem("solved",JSON.stringify(solved));
+  addSolved(q.id);
   MathJax.typesetPromise();
 }
   
 // ===== 次へ =====
 function nextQuestion() {
-
-  let next;
-
-  do {
-    next = Math.floor(
-      Math.random() * questions.length
-    );
-  } while (
-    questions.length > 1 &&
-    next === index
-  );
-
-  index = next;
-
-  render();
+  const available =getAvailavleQuestion();
+  if (available.length ===0){
+    alert("終了");
+    return;
+  }
+  const randomIndex = Math.floor(Math.random() * available.length);
+  currentQuestion=available[randomIndex];
+  render(currentQuestion);
 }
 
 // 初期表示
