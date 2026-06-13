@@ -1,191 +1,33 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-<script>
-window.MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']]
-  }
-};
-</script>
-
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>なつ強化問題ビューア</title>
-<style>
-body {
-  font-family: sans-serif;
-  padding: 15px;
-  font-size: 22px;
-  max-width: 800px;
-  margin: auto;
-}
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.header img {
-  width: 85px;
-  height: 60px;
-}
-.box {
-  border: 1px solid #ccc;
-  padding: 15px;
-  margin-bottom: 10px;
-}
-
-#questionInfo {
-  font-size: 14px;
-  color: gray;
-  margin-bottom: 10px;
-}
-
-#questionText {
-  font-size: 28px;
-  font-weight: bold;
-  margin-bottom: 15px;
-}
-
-#questionLatex {
-  font-size: 32px;
-  margin-bottom: 20px;
-}
-
-#questionFigure {
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-#answerBox {
-  font-size: 28px;
-  margin-top: 20px;
-}
-
-button {
-  width: 100%;
-  height: 60px;
-  font-size: 24px;
-  margin-top: 10px;
-}
-</style>
-</head>
-<body>
-
-<div class="header">
-  <h2>なつ強化問題</h2>
-  <img src="icon.jpg" alt="アイコン">
-</div>
-
-<div class="box">
-  <div id="questionInfo"></div>
-  <div id="questionText"></div>
-  <div id="questionLatex"></div>
-  <div id="questionFigure"></div>
-  
-  
-  <button onclick="showAnswer(currentQuestion)">解答表示</button>
-  <button onclick="nextQuestion()">次へ</button>
-
-  <div id="answerBox" class="answer"></div>
-</div>
-
-<script>
-// ============================================= Script ==================================================
-// ===== localStorageデータ =====
-const solved = JSON.parse(localStorage.getItem("solved")) || [];
-// ===== JSONデータ =====
-let questions = [];
-let index = 0;
-let currentQuestion;
-
-// ===== loadQuestions =====
-async function loadQuestions() {
-  const response = await fetch("./data/questions.json");
-  questions = await response.json();
-  // enabled=falseを除外
-  questions = questions.filter(q => q.enabled);
-  nextQuestion();
-}
-
-loadQuestions();
-// ===== 解答履歴読み込み =====
-  function getSolved(){
-    return JSON.parse(localStorage.getItem("solved")) || [];
-  }
-
-// ===== 解答履歴保存 =====
-function addSolved(id){
-  let solved=JSON.parse(localStorage.getItem("solved")) || [];
-  if (!solved.includes(id)){
-    solved.push(id);
-    localStorage.setItem("solved",JSON.stringify(solved));
-  }
-}
-// ===== 解答履歴でフィルター =====
-  function getAvailableQuestions(){
-    const solved=getSolved();
-    return questions.filter(q => !solved.includes(q.id));
-  }
-
-// ===== 表示関数 =====
-function render(q) {
-  
-  document.getElementById("questionInfo").innerText =
-    `${index + 1} / ${questions.length}
-     ID:${q.id}
-     難易度:${q.difficulty}
-     解答済み:${solved.length}`;
-  document.getElementById("questionText").innerText = q.question.text;
-
-  document.getElementById("questionLatex").innerHTML =
-    q.question.latex ? `\\(${q.question.latex}\\)` : "";
-
-  document.getElementById("questionFigure").innerText =
-    q.question.figure
-      ? `図形: 底辺=${q.question.figure.base}, 高さ=${q.question.figure.height}`
-      : "";
-
-  document.getElementById("answerBox").style.display = "none";
-  document.getElementById("answerBox").innerText = "";
-  // DOM更新後に一括レンダリング
-  requestAnimationFrame(() => {
-    MathJax.typesetPromise();
-  });
-}
-  
-// ===== 解答表示 =====
-function showAnswer(q) {
-  const box = document.getElementById("answerBox");
-
-  box.style.display = "block";
-  box.innerHTML = `
-  ${q.answer.latex ? `解答: \\(${q.answer.latex}\\)<br>` : ""}
-  ${q.answer.text ? `答え: ${q.answer.text}` : ""}
-　`;
-  addSolved(q.id);
-  requestAnimationFrame(() => {
-    MathJax.typesetPromise([box]);
-  });
-}
-  
-// ===== 次へ =====
-function nextQuestion() {
-  const available =getAvailableQuestions();
-  if (available.length ===0){
-    alert("終了");
-    return;
-  }
-  const randomIndex = Math.floor(Math.random() * available.length);
-  currentQuestion=available[randomIndex];
-  render(currentQuestion);
-}
-
-// 初期表示
-loadQuestions();
-</script>
-
-</body>
+  <head>
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+      };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>なつ強化問題ビューア</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="header">
+      <h2>なつ強化問題</h2>
+      <img src="icon.jpg" alt="アイコン">
+    </div>
+    <div class="box">
+      <div id="questionInfo"></div>
+      <div id="questionText"></div>
+      <div id="questionLatex"></div>
+      <div id="questionFigure"></div>
+      <button onclick="showAnswer(currentQuestion)">解答表示</button>
+      <button onclick="nextQuestion()">次へ</button>
+      <div id="answerBox" class="answer"></div>
+    </div>
+  </body>
 </html>
